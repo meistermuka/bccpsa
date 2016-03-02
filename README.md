@@ -1,4 +1,4 @@
-# BCCPSA: Basic Camera Control Project - Second Act
+# Basic Camera Control Project - Second Act
 
 This repository will keep track of a final project for my electrical engineering diploma
 
