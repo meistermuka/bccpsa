@@ -13,25 +13,23 @@ def get_config_value(value, camera, context):
 
 def capture_image(camera, context):
     print "Capturing Image"
+    # Image being captured and stored on camera
     image_path = gp.check_result(gp.gp_camera_capture(camera, gp.GP_CAPTURE_IMAGE, context))
+    # Grabbing timestamp for unique file name
     timestamp = int(time.time())
-    print "Captured at ", timestamp
     extension = image_path.name.split('.')[1]
     image_name = "TST_{}.".format(timestamp) + extension
     target_path = os.path.join('/tmp/bccpsa', image_name)
-    print "Copying to ", target_path
+    # "Grunt" work to move the file off camera
     image_file = gp.check_result(gp.gp_camera_file_get(camera, image_path.folder, image_path.name, gp.GP_FILE_TYPE_NORMAL, context))
     gp.check_result(gp.gp_file_save(image_file, target_path))
 
 #Used to get more information on the folders on the camera
 def get_folder_contents(folder, camera, context):
-
     result = []
-
+    folders = []
     for name, value in camera.folder_list_files(folder, context):
         result.append(os.path.join(folder, name))
-
-    folders = []
 
     for name, value in camera.folder_list_folders(folder, context):
         folders.append(name)
@@ -42,6 +40,14 @@ def get_folder_contents(folder, camera, context):
 
     return result
 
+def get_iso(camera, context):
+    return get_config_value("iso", camera, context)
+
+def get_shutterspeed(camera, context):
+    return get_config_value("shutterspeed2", camera, context)
+
+def get_aperture(camera, context):
+    return get_config_value("f-number", camera, context)
 
 def main():
 
@@ -51,18 +57,15 @@ def main():
     gp.check_result(gp.gp_camera_init(camera, context))
 
     #Get basic info from camera
-    print "ISO: " + get_config_value("iso", camera, context)
-    print "Shutter Speed: " + get_config_value("shutterspeed2", camera, context)
-    print "Aperture: " + get_config_value("f-number", camera, context)
+    print "ISO: " + get_iso(camera, context)
+    print "Shutter Speed: " + get_shutterspeed(camera, context)
+    print "Aperture: " + get_aperture(camera, context)
 
     #files = get_folder_contents("/", camera, context)
 
     capture_image(camera, context)
 
     gp.check_result(gp.gp_camera_exit(camera, context))
-
-
-
 
 if __name__  == "__main__":
     sys.exit(main())
