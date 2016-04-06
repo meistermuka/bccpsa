@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Capture Image</h3>
+
+<form action="{{ url_for('process_capture_image') }}" method="post" class="capture-image">
+    <strong>ISO({{ iso_current }}):</strong>
+    <select name="iso">
+        {% for iso in ISOS_SORTED %}
+        {% if iso_current == ISOS[iso] %}
+            <option value="{{ iso }}" selected>{{ ISOS[iso] }}</option>
+        {% else %}
+            <option value="{{ iso }}">{{ ISOS[iso] }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <strong>F-STOP({{ fstop_current }}):</strong>
+    <select name="aperture">
+        {% for fstop,fstopvalue in FSTOPS.items() %}
+        {% if fstop_current == fstopvalue %}
+            <option value="{{ fstop }}" selected>{{ fstopvalue }}</option>
+        {% else %}
+            <option value="{{ fstop }}">{{ fstopvalue }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <strong>SHUTTER({{ shutterspeed_current }}):</strong>
+    <select name="shutter">
+        {% for shutter,shuttervalue in SHUTTERS.items() %}
+        {% if shutterspeed_current == shuttervalue%}
+            <option value="{{ shutter }}" selected>{{ shuttervalue }}</option>
+        {% else %}
+            <option value="{{ shutter }}">{{ shuttervalue }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+</form>
+{% endblock %}

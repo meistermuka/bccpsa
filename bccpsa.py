@@ -19,7 +19,7 @@ def get_config_value(value, camera, context):
     config_value = gp.check_result(gp.gp_widget_get_value(camera_widget_child))
     return config_value
 
-def capture_image(camera, context):
+def _capture_image(camera, context):
     print "Capturing Image"
     # Image being captured and stored on camera
     image_path = gp.check_result(gp.gp_camera_capture(camera, gp.GP_CAPTURE_IMAGE, context))
@@ -73,19 +73,35 @@ def basic_info():
     init_string = "ISO: " + get_iso(camera, context) + " <br>Shutter Speed: " + get_shutterspeed(camera, context) + "<br>Aperture: " + get_aperture(camera, context) + "<br>Extra Info: " + get_config_value("5001", camera, context)
     return init_string
     #gp.check_result(gp.gp_camera_exit(camera, context))
+
+@app.route('/process_capture', methods=['POST'])
+def process_capture_image():
+    pass
+
+@app.route('/capture')
+def capture():
+    iso = get_iso(camera, context)
+    fstop = get_aperture(camera, context)
+    shutterspeed = get_shutterspeed(camera, context)
+    return render_template('image_capture.html', iso_current=int(iso),
+                           fstop_current=fstop,
+                           shutterspeed_current=shutterspeed,
+                           ISOS_SORTED=sorted(ISO_CONSTANTS, key=ISO_CONSTANTS.__getitem__),
+                           ISOS=ISO_CONSTANTS,
+                           FSTOPS=APERTURE_CONSTANTS,
+                           SHUTTERS=SHUTTER_SPEED_CONSTANTS)
 #OK
 @app.route('/iso')
 def get_iso(camera, context):
-    return "ISO: " + get_config_value("iso", camera, context)
+    return get_config_value("iso", camera, context)
 #OK
 @app.route('/shutterspeed')
 def get_shutterspeed(camera, context):
-    shutterspeed = "SHUTTER: " + get_config_value("shutterspeed2", camera, context)
-    return shutterspeed
+    return get_config_value("shutterspeed2", camera, context)
 #OK
 @app.route('/aperture')
 def get_aperture(camera, context):
-    return "APERTURE: " + get_config_value("f-number", camera, context)
+    return get_config_value("f-number", camera, context)
 
 @app.route('/folder')
 def folder_contents():
@@ -95,5 +111,5 @@ def folder_contents():
 
 
 if __name__  == "__main__":
-    app.run()
+    app.run(debug=True)
     #sys.exit(main())
