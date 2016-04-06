@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<title>BCCP</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<div class="page">
+    <h1>BCCP</h1>
+    <div class="basicnav">
+        <a href="/">BASIC CAMERA INFO</a>|
+        <a href="{{ url_for('folder_contents') }}">CAMERA FOLDER CONTENTS</a>|
+        <a href="/">CAPTURED IMAGES</a>
+    </div>
+    {% block body %}{% endblock %}
+</div>
