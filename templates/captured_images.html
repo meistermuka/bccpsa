@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Local Folder Contents</h3>
+<ul class="folder_content">
+    {% for file in list_of_files %}
+    <li>{{ file }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

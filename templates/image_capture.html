@@ -4,7 +4,7 @@
 
 <form action="{{ url_for('process_capture_image') }}" method="post" class="capture-image">
     <strong>ISO({{ iso_current }}):</strong>
-    <select name="iso">
+    <select name="asa">
         {% for iso in ISOS_SORTED %}
         {% if iso_current == ISOS[iso] %}
             <option value="{{ iso }}" selected>{{ ISOS[iso] }}</option>
@@ -24,7 +24,7 @@
         {% endfor %}
     </select>
     <strong>SHUTTER({{ shutterspeed_current }}):</strong>
-    <select name="shutter">
+    <select name="shutterspeed">
         {% for shutter,shuttervalue in SHUTTERS.items() %}
         {% if shutterspeed_current == shuttervalue%}
             <option value="{{ shutter }}" selected>{{ shuttervalue }}</option>
@@ -33,5 +33,6 @@
         {% endif %}
         {% endfor %}
     </select>
+    <input type="submit" value="Capture">
 </form>
 {% endblock %}
