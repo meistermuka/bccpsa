@@ -3,7 +3,7 @@
 <h3>Local Folder Contents</h3>
 <ul class="folder_content">
     {% for file in list_of_files %}
-    <li>{{ file }}</li>
+    <li><a href="/images/{{ file }}">{{ file }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

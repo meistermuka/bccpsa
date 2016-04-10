@@ -2,6 +2,7 @@ import gphoto2 as gp
 import os
 import sys
 import time
+from PIL import Image
 from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 from bccp_helper import ISO_CONSTANTS, SHUTTER_SPEED_CONSTANTS, APERTURE_CONSTANTS
 
@@ -84,6 +85,12 @@ def captured_images():
     target_folder = os.getcwd()+'/images'
     list_of_files = os.listdir(target_folder)
     return render_template('captured_images.html', list_of_files=list_of_files)
+
+@app.route('/images/<imagefile>')
+def display_image(imagefile):
+    im = Image.open(os.getcwd()+'/images/'+str(imagefile))
+    im.show()
+
 
 @app.route('/capture')
 def capture():
