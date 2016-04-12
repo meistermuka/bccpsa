@@ -1,4 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
-
+<h2>Basic camera info</h2>
+<table class="tg">
+  <tr>
+    <th class="tg-a2cf">Manufacturer</th>
+    <th class="tg-a2cf">Model</th>
+    <th class="tg-a2cf">Serial Number</th>
+  </tr>
+  <tr>
+    <td class="tg-804w">{{ basic_data.manufacturer }}</td>
+    <td class="tg-804w">{{ basic_data.model }}</td>
+    <td class="tg-804w">{{ basic_data.serialnumber }}</td>
+  </tr>
+  <tr>
+    <td class="tg-a2cf">ISO</td>
+    <td class="tg-a2cf">Shutter Speed</td>
+    <td class="tg-a2cf">Aperture</td>
+  </tr>
+  <tr>
+    <td class="tg-804w">{{ basic_data.iso }}</td>
+    <td class="tg-804w">{{ basic_data.shutterspeed }}</td>
+    <td class="tg-804w">{{ basic_data.aperture }}</td>
+  </tr>
+  <tr>
+    <td class="tg-a2cf">Max Shots</td>
+    <td class="tg-a2cf">Battery Level</td>
+    <td class="tg-a2cf">Flash Mode</td>
+  </tr>
+  <tr>
+    <td class="tg-804w">{{ basic_data.maximumshots }}</td>
+    <td class="tg-804w">{{ basic_data.battery }}</td>
+    <td class="tg-804w">{{ basic_data.flashmode }}</td>
+  </tr>
+</table>
 {% endblock %}

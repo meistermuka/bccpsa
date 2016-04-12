@@ -1,9 +1,8 @@
 import gphoto2 as gp
 import os
-import sys
 import time
 from PIL import Image
-from flask import Flask, request, session, g, redirect, url_for, render_template, flash
+from flask import Flask, request, redirect, url_for, render_template
 from bccp_helper import ISO_CONSTANTS, SHUTTER_SPEED_CONSTANTS, APERTURE_CONSTANTS
 
 app = Flask(__name__)
@@ -63,8 +62,18 @@ def _get_folder_contents(folder, camera, context):
 
 @app.route('/')
 def basic_info():
-    init_string = "ISO: " + get_iso(camera, context) + " <br>Shutter Speed: " + get_shutterspeed(camera, context) + "<br>Aperture: " + get_aperture(camera, context)
-    return init_string
+    basic_info_data = dict()
+    basic_info_data['iso'] = get_iso(camera, context)
+    basic_info_data['shutterspeed'] = get_shutterspeed(camera, context)
+    basic_info_data['aperture'] = get_aperture(camera, context)
+    basic_info_data['battery'] = get_config_value('batterylevel', camera, context)
+    basic_info_data['model'] = get_config_value('cameramodel', camera, context)
+    basic_info_data['manufacturer'] = get_config_value('manufacturer', camera, context)
+    basic_info_data['serialnumber'] = get_config_value('serialnumber', camera, context)
+    basic_info_data['maximumshots'] = get_config_value('maximumshots', camera, context)
+    basic_info_data['flashmode'] = get_config_value('flashmode', camera, context)
+    return render_template('basic_info.html', basic_data=basic_info_data)
+    #return init_string
     #gp.check_result(gp.gp_camera_exit(camera, context))
 
 @app.route('/process_capture', methods=['POST'])
@@ -90,6 +99,7 @@ def captured_images():
 def display_image(imagefile):
     im = Image.open(os.getcwd()+'/images/'+str(imagefile))
     im.show()
+    return redirect(url_for('captured_images'))
 
 
 @app.route('/capture')
@@ -131,5 +141,5 @@ def folder_contents():
 
 
 if __name__  == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
     #sys.exit(main())

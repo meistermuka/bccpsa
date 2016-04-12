@@ -7,7 +7,7 @@
         <a href="/">BASIC CAMERA INFO</a>|
         <a href="{{ url_for('folder_contents') }}">CAMERA FOLDER CONTENTS</a>|
         <a href="{{ url_for('capture') }}">CAPTURE IMAGE</a>|
-        <a href="/captured_images">CAPTURED IMAGES</a>
+        <a href="{{ url_for('captured_images') }}">CAPTURED IMAGES</a>
     </div>
     {% block body %}{% endblock %}
 </div>
